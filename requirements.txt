@@ -1,0 +1,50 @@
+# ============================================================
+# Veritas RAG — Self-Correcting RAG Pipeline
+# ============================================================
+# Install: pip install -r requirements.txt
+# Python:  3.11+
+# ============================================================
+
+# --- Ingestion: Document parsing & OCR ---
+PyMuPDF>=1.24.0            # fitz — PDF text extraction
+pytesseract>=0.3.10        # Tesseract OCR wrapper
+Pillow>=10.0.0             # Image handling for OCR
+
+# --- Retrieval: Embeddings, vector store, sparse search ---
+chromadb>=0.5.0            # Local persistent vector database
+sentence-transformers>=3.0.0  # Embeddings (all-MiniLM-L6-v2) + CrossEncoder reranker
+rank-bm25>=0.2.2           # BM25 sparse retrieval
+
+# --- Orchestration (Day 2+) ---
+langgraph>=0.2.0           # Agentic state-machine orchestration
+langchain-core>=0.3.0      # Required by LangGraph
+
+# --- LLM Providers (abstracted — only one active at a time) ---
+google-generativeai>=0.8.0 # Gemini Flash (free tier, default)
+openai>=1.30.0             # OpenAI GPT-4o/4o-mini (swap via .env)
+
+# --- API Layer (Day 3+) ---
+fastapi>=0.111.0           # REST API framework
+uvicorn[standard]>=0.30.0  # ASGI server
+
+# --- Config & Validation ---
+python-dotenv>=1.0.0       # .env file loading
+pydantic>=2.7.0            # Schema enforcement & settings
+pydantic-settings>=2.3.0   # Pydantic Settings from env vars
+
+# --- Observability ---
+structlog>=24.1.0          # Structured JSON logging
+
+# --- Post-Gen Verification (Day 3+) ---
+# cross-encoder/nli-deberta-v3-small loaded via sentence-transformers
+
+# --- Evaluation (Day 5+) ---
+ragas>=0.1.10              # RAGAS evaluation framework
+datasets>=2.20.0           # HuggingFace datasets (RAGAS dep)
+
+# --- Testing ---
+pytest>=8.0.0              # Test runner
+pytest-asyncio>=0.23.0     # Async test support
+
+# --- Corpus Generation ---
+fpdf2>=2.8.0               # Generate test PDFs programmatically

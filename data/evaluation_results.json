@@ -1,0 +1,317 @@
+[
+  {
+    "query": "What is OneInbox?",
+    "baseline": {
+      "query": "What is OneInbox?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "What is OneInbox?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "What is OneInbox?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "How do I create a new knowledge base?",
+    "baseline": {
+      "query": "How do I create a new knowledge base?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "How do I create a new knowledge base?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "How do I create a new knowledge base?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "What types of agents does OneInbox support?",
+    "baseline": {
+      "query": "What types of agents does OneInbox support?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "What types of agents does OneInbox support?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "What types of agents does OneInbox support?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Explain how webhooks work in OneInbox.",
+    "baseline": {
+      "query": "Explain how webhooks work in OneInbox.",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Explain how webhooks work in OneInbox.",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Explain how webhooks work in OneInbox.",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Where can I find the Calls API?",
+    "baseline": {
+      "query": "Where can I find the Calls API?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Where can I find the Calls API?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Where can I find the Calls API?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "How many tools does OneInbox support?",
+    "baseline": {
+      "query": "How many tools does OneInbox support?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "How many tools does OneInbox support?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "How many tools does OneInbox support?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Can schedule_calendar_event be used by standard agents?",
+    "baseline": {
+      "query": "Can schedule_calendar_event be used by standard agents?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Can schedule_calendar_event be used by standard agents?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Can schedule_calendar_event be used by standard agents?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Is the quickstart guide 5 pages long?",
+    "baseline": {
+      "query": "Is the quickstart guide 5 pages long?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Is the quickstart guide 5 pages long?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Is the quickstart guide 5 pages long?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Does OneInbox support direct database integration?",
+    "baseline": {
+      "query": "Does OneInbox support direct database integration?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Does OneInbox support direct database integration?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Does OneInbox support direct database integration?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Are voice agents currently in beta?",
+    "baseline": {
+      "query": "Are voice agents currently in beta?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Are voice agents currently in beta?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Are voice agents currently in beta?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "How do I do it?",
+    "baseline": {
+      "query": "How do I do it?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "How do I do it?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "How do I do it?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "What is the capital of France?",
+    "baseline": {
+      "query": "What is the capital of France?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "What is the capital of France?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "What is the capital of France?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Who is the CEO of Google?",
+    "baseline": {
+      "query": "Who is the CEO of Google?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Who is the CEO of Google?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Who is the CEO of Google?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Explain the thing about the stuff.",
+    "baseline": {
+      "query": "Explain the thing about the stuff.",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Explain the thing about the stuff.",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Explain the thing about the stuff.",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  },
+  {
+    "query": "Can you reset my password?",
+    "baseline": {
+      "query": "Can you reset my password?",
+      "variant": "baseline",
+      "status": "mocked",
+      "answer": "Mocked baseline"
+    },
+    "plus_critic": {
+      "query": "Can you reset my password?",
+      "variant": "plus_critic",
+      "status": "mocked",
+      "answer": "Mocked critic"
+    },
+    "full_pipeline": {
+      "query": "Can you reset my password?",
+      "variant": "full_pipeline",
+      "status": "mocked",
+      "answer": "Mocked full"
+    }
+  }
+]
