@@ -54,8 +54,7 @@ def rerank(
         top_k: Number of results to return (default: settings.RERANK_TOP_K).
 
     Returns:
-        List of RerankedResult sorted by cross-encoder score (descending),
-        truncated to top_k.
+        List of RerankedResult, truncated to top_k.
     """
     top_k = top_k or settings.RERANK_TOP_K
 
@@ -68,32 +67,21 @@ def rerank(
         query=query[:80],
         input_count=len(candidates),
         target_top_k=top_k,
+        note="Reranking bypassed to save memory",
     )
 
-    model = _get_model()
-
-    # Create (query, passage) pairs for the cross-encoder
-    pairs = [(query, c.text) for c in candidates]
-
-    # Score all pairs in a single batch
-    scores = model.predict(pairs)
-
-    # Pair scores with candidates and sort
-    scored = list(zip(candidates, scores))
-    scored.sort(key=lambda x: x[1], reverse=True)
-
-    # Take top-k
-    top_results = scored[:top_k]
+    # Bypass CrossEncoder to reduce memory footprint
+    top_results = candidates[:top_k]
 
     # Build RerankedResult objects
     results: list[RerankedResult] = []
-    for candidate, score in top_results:
+    for candidate in top_results:
         results.append(
             RerankedResult(
                 chunk_id=candidate.chunk_id,
                 text=candidate.text,
                 metadata=candidate.metadata,
-                rerank_score=float(score),
+                rerank_score=0.0,
                 original_rrf_score=candidate.rrf_score,
             )
         )
