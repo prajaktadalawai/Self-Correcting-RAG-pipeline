@@ -1,89 +1,110 @@
-# Veritas RAG: Self-Correcting Enterprise RAG Pipeline
+# Veritas RAG: Self-Correcting Pipeline
 
-**AI Engineer Hackathon Submission**
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
-Veritas RAG is a production-grade, self-correcting Retrieval-Augmented Generation pipeline. It solves the critical enterprise problem of LLM hallucinations by aggressively evaluating retrieved context *before* generation and verifying the output *after* generation. 
-
-If the context is insufficient, ambiguous, or contradictory, the system will mathematically rewrite the query, surface the contradiction safely, or explicitly abstain, dropping hallucination rates from 66% (Naive RAG) to 0%.
-
----
-
-## 🏗️ Architecture Summary
-
-The pipeline is orchestrated as a state machine using **LangGraph** and relies on four distinct tiers:
-
-1. **Ingestion Tier (`PyMuPDF` + `pytesseract`)**: Dynamically extracts text from messy PDFs. It calculates an `ingest_confidence` score and automatically falls back to OCR for heavily scanned pages.
-2. **Retrieval Tier (`ChromaDB` + `Cross-Encoder`)**: Implements Hybrid Search (Dense Vector + Sparse Keyword via BM25) and aggressively reranks the top 20 hits down to the absolute best 6 chunks using `ms-marco-MiniLM-L-6-v2`.
-3. **Critic & Orchestrator Tier (`LangGraph`)**: A batched, low-temperature LLM call evaluates the chunks against the query. The orchestrator routes the execution path:
-   - **Contradiction?** Safely aborts and surfaces the conflict.
-   - **Insufficient Context?** Triggers a bounded `rewrite_query` loop (Max 1 retry).
-   - **Ambiguous?** Asks the user for clarification.
-4. **Generation & Verification Tier**: The Generator outputs an answer with strict chunk citations. The Verifier acts as a secondary check to ensure the generated answer is strictly entailed by the context. If it hallucinates, it triggers a bounded regeneration loop.
-
-Everything is wrapped in a **FastAPI** web server, returning strictly validated Pydantic JSON schemas.
+**Veritas RAG** is a highly robust, self-correcting Retrieval-Augmented Generation (RAG) pipeline designed to eliminate hallucinations by intelligently identifying and routing contradictory, ambiguous, or out-of-bounds queries safely. 
 
 ---
 
-## 🚀 Setup Instructions
+## 2. Demo and Visuals
 
-### 1. Prerequisites
-- Python 3.11+
-- Tesseract OCR (Installed via your OS package manager, e.g., `winget install UB-Mannheim.TesseractOCR` on Windows or `brew install tesseract` on Mac).
+*The live demo features a real-time Streamlit dashboard that visualizes the internal thought process of the Orchestrator, Critic, and Verifier agents as they stream responses via FastAPI.*
 
-### 2. Installation
+**(Insert Demo GIF or Screenshot here)**
+
+- **Live URL (Hugging Face / Render):** [Insert Live Link Here]
+
+---
+
+## 3. Key Features
+
+- **Self-Correcting Architecture**: Employs an internal "Critic" to evaluate retrieved context and a "Verifier" to fact-check the final generated output against the source.
+- **Intelligent Routing**: Gracefully handles bad data. If sources contradict each other, or if the user asks a fundamentally ambiguous question, the system routes to a "Low Confidence" state instead of hallucinating.
+- **High-Speed Inference**: Powered by LLaMA-3 (via Groq API) for blazing-fast generation and reasoning.
+- **Streaming Pipeline**: FastAPI backend uses Server-Sent Events (SSE) to stream real-time pipeline traces directly to the Streamlit UI.
+- **Docker-Ready deployment**: Runs seamlessly in a single container for platforms like Hugging Face Spaces or Render.
+
+---
+
+## 4. Prerequisites and System Requirements
+
+- **Environment:** Windows, macOS, or Linux.
+- **Hardware:** CPU-only required (API handles LLM inference).
+- **Dependencies:** 
+  - Python 3.11+
+  - A valid [Groq API Key](https://console.groq.com/keys) for ultra-fast LLaMA-3 inference.
+
+---
+
+## 5. Installation Guide
+
+Follow these steps to get the Veritas RAG pipeline running locally on your machine:
+
 ```bash
-# Clone the repository
-git clone <your-repo-url>
-cd veritas-rag
+# 1. Clone the repository
+git clone https://github.com/prajaktadalawai/Self-Correcting-RAG-pipeline.git
 
-# Create and activate a virtual environment
-python -m venv venv
-# Windows: venv\Scripts\activate
-# Mac/Linux: source venv/bin/activate
+# 2. Navigate into the directory
+cd Self-Correcting-RAG-pipeline
 
-# Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
+
+# 4. Set up your environment variables
+cp .env.example .env
+```
+*Note: Open the `.env` file and insert your `OPENAI_API_KEY` (use your Groq API key, as the system is configured to route OpenAI SDK calls to the Groq endpoints).*
+
+---
+
+## 6. Usage and Quickstart
+
+The project provides a unified startup script that launches both the FastAPI backend and Streamlit frontend simultaneously.
+
+**To run the application locally:**
+```bash
+# Make the script executable (macOS/Linux)
+chmod +x start.sh
+
+# Run the startup script
+./start.sh
 ```
 
-### 3. Environment Variables
-Create a `.env` file in the root directory and add your API keys:
-```env
-OPENAI_API_KEY="your-api-key-here"
-# Note: You can use a Gemini API key by overriding the OPENAI_BASE_URL
-# OPENAI_BASE_URL="https://generativelanguage.googleapis.com/v1beta/openai/"
-# LLM_MODEL="gemini-2.5-flash"
-```
+Once running, open your browser and navigate to `http://localhost:8501`. 
+You can use the preset trigger buttons in the sidebar to test the pipeline's handling of Factual Queries, Contradictions, Ambiguities, and Out-of-Bounds requests.
 
-### 4. Running the Pipeline
-You can run the FastAPI server locally:
+**To run via Docker:**
 ```bash
-uvicorn src.api.app:app --reload
-```
-Test the endpoint via cURL or Postman:
-```bash
-curl -X POST "http://127.0.0.1:8000/ask" \
-     -H "Content-Type: application/json" \
-     -d '{"query": "How many tools does OneInbox support?"}'
+docker build -t veritas-rag .
+docker run -p 8501:8501 -p 8000:8000 veritas-rag
 ```
 
 ---
 
-## 🎥 Recording Your Demo Video (Judges' Guide)
+## 7. Project Structure
 
-To fulfill the demo requirement, follow these steps to record your screen while hitting the local API:
+```text
+├── data/                  # ChromaDB vector store and raw PDF documents
+├── scripts/               # Utility scripts for ingestion, evaluation, and stress testing
+├── src/
+│   ├── agent/             # Core LLM agents (Orchestrator, Critic, Generator, Verifier)
+│   ├── api/               # FastAPI backend application
+│   ├── ingestion/         # Document chunking and parsing logic
+│   ├── retrieval/         # Vector DB search and Reranking logic
+│   └── streamlit_app.py   # Main Streamlit UI dashboard
+├── .env.example           # Example environment variables
+├── Dockerfile             # Container configuration
+├── requirements.txt       # Python dependencies
+└── start.sh               # Unified execution script
+```
 
-1. **Clean Answer Case**:
-   - **Query:** `"What is OneInbox?"`
-   - **Expected Result:** The API returns `"status": "success"` with a `"confidence_label": "high"`, providing a factual answer and specific chunk citations.
+---
 
-2. **Contradiction Case**:
-   - **Query:** `"How many tools does OneInbox support?"`
-   - **Expected Result:** The Critic catches the conflict between the V1 and V2 docs. The API returns `"status": "contradiction_found"` and `"confidence_label": "low"`, safely refusing to answer.
+## 8. Data and Model Weights
 
-3. **Insufficient-Context Case (Query Rewriting)**:
-   - **Query:** `"Is the quickstart guide 5 pages long?"`
-   - **Expected Result:** The API loops internally to rewrite the query. If it still fails, it breaks the loop and returns `"status": "low_confidence"` and `"verification_status": "flagged"`, explicitly abstaining from guessing.
-
-4. **Low-Confidence / Ambiguous Case**:
-   - **Query:** `"How do I do it?"`
-   - **Expected Result:** The Critic immediately flags the query as ambiguous. The API returns `"status": "clarification_needed"`.
+- **Dataset:** The knowledge base uses the "OneInbox" technical manuals, tool guides, and API specifications provided specifically for this hackathon. The raw PDFs are located in `data/test_corpus`.
+- **Embeddings Model:** Uses `all-MiniLM-L6-v2` (SentenceTransformers) hosted via HuggingFace for dense vector retrieval.
+- **Reranker:** Uses `cross-encoder/ms-marco-MiniLM-L-6-v2` to rerank and refine initial search results.
+- **LLM Checkpoints:** No local weights are required. The pipeline relies on the Groq API for lightning-fast LLaMA-3-8B-Instant inference.
