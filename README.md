@@ -86,18 +86,33 @@ docker run -p 8501:8501 -p 8000:8000 veritas-rag
 ## 7. Project Structure
 
 ```text
-├── data/                  # ChromaDB vector store and raw PDF documents
-├── scripts/               # Utility scripts for ingestion, evaluation, and stress testing
+├── data/
+│   └── test_corpus/       # OneInbox API specs and Tool Guides
+├── scripts/
+│   ├── ingest.py          # Populates ChromaDB with vector embeddings
+│   ├── evaluate.py        # Automated evaluation harness
+│   └── stress_test.py     # API load testing script
 ├── src/
-│   ├── agent/             # Core LLM agents (Orchestrator, Critic, Generator, Verifier)
-│   ├── api/               # FastAPI backend application
-│   ├── ingestion/         # Document chunking and parsing logic
-│   ├── retrieval/         # Vector DB search and Reranking logic
-│   └── streamlit_app.py   # Main Streamlit UI dashboard
-├── .env.example           # Example environment variables
-├── Dockerfile             # Container configuration
-├── requirements.txt       # Python dependencies
-└── start.sh               # Unified execution script
+│   ├── ingestion/
+│   │   ├── parser.py      # PyMuPDF text extraction
+│   │   └── chunker.py     # Document chunking & metadata tagging
+│   ├── retrieval/
+│   │   ├── index.py       # ChromaDB dense retrieval
+│   │   └── reranker.py    # Cross-encoder reranking (top-20 -> top-6)
+│   ├── agent/
+│   │   ├── orchestrator.py # LangGraph state graph wiring
+│   │   ├── critic.py      # Batched LLM context evaluation (Sufficiency/Contradiction)
+│   │   ├── generator.py   # Answer generation with forced citations
+│   │   └── verifier.py    # Post-generation hallucination checks
+│   ├── observability/
+│   │   └── logger.py      # Structured JSON logging
+│   ├── api/
+│   │   └── app.py         # FastAPI backend (SSE streaming)
+│   └── streamlit_app.py   # Real-time Streamlit dashboard
+├── PROMPTS.md             # Master list of all LLM system prompts
+├── Dockerfile             # Universal cloud deployment configuration
+├── start.sh               # Simultaneous frontend/backend boot script
+└── requirements.txt       # Python dependencies
 ```
 
 ---
