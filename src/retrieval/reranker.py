@@ -70,13 +70,23 @@ def rerank(
         target_top_k=top_k,
     )
 
+    import gc
+    import torch
+    
     model = _get_model()
 
     # Create (query, passage) pairs for the cross-encoder
     pairs = [(query, c.text) for c in candidates]
 
-    # Score all pairs in a single batch
-    scores = model.predict(pairs)
+    # Score all pairs in a single batch without gradients to save memory
+    with torch.no_grad():
+        scores = model.predict(pairs)
+        
+    # Aggressively unload model from memory
+    global _model
+    _model = None
+    del model
+    gc.collect()
 
     # Pair scores with candidates and sort
     scored = list(zip(candidates, scores))

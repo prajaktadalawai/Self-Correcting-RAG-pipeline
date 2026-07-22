@@ -29,13 +29,13 @@ def get_index():
 # -- Node Functions --
 
 def retrieve_node(state: AgentState) -> AgentState:
-    """Executes real hybrid retrieval. Reranker bypassed to prevent OOM on Render free tier."""
+    """Executes real hybrid retrieval and reranking."""
     logger.info("node_retrieve", query=state["query"])
     idx = get_index()
-    # Retrieve only top 6 directly to save memory instead of top 20 + rerank
-    candidates = idx.retrieve(state["query"], top_k=6)
-    
-    chunks = [DocumentChunk(chunk_id=r.chunk_id, text=r.text, metadata=r.metadata) for r in candidates]
+    candidates = idx.retrieve(state["query"], top_k=20)
+    reranked = rerank(state["query"], candidates, top_k=6)
+    # Convert RerankedResult back to DocumentChunk for state consistency
+    chunks = [DocumentChunk(chunk_id=r.chunk_id, text=r.text, metadata=r.metadata) for r in reranked]
     state["retrieved_chunks"] = chunks
     return state
 

@@ -35,10 +35,20 @@ def verify_hallucination(answer: str, chunks: list[DocumentChunk]) -> Verificati
     context_text = "\n\n".join([c.text for c in chunks])
     
     try:
+        import gc
+        import torch
+        
         model = _get_model()
         # For NLI: premise is context, hypothesis is the answer
         # The model outputs logits for [Contradiction, Entailment, Neutral]
-        scores = model.predict([(context_text, answer)])[0]
+        with torch.no_grad():
+            scores = model.predict([(context_text, answer)])[0]
+            
+        # Aggressively unload model to free RAM
+        global _model
+        _model = None
+        del model
+        gc.collect()
         
         # Labels: 0: contradiction, 1: entailment, 2: neutral
         predicted_label_idx = scores.argmax()
