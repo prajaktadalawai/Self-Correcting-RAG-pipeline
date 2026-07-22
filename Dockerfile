@@ -16,9 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Expose ports
+# Expose the API port
 EXPOSE 8000
-EXPOSE 8501
 
 # Make the start script executable
 RUN chmod +x start.sh

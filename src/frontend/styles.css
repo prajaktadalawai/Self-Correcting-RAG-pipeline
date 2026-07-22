@@ -1,0 +1,243 @@
+:root {
+    /* Main Dark Theme (Streamlit Dark) */
+    --bg-main: #0e1117;
+    --bg-secondary: #262730;
+    --text-main: #fafafa;
+    --text-muted: #a3a8b8;
+    
+    /* Sidebar Light Theme (Streamlit Default Sidebar) */
+    --bg-sidebar: #f0f2f6;
+    --text-sidebar: #31333F;
+    --border-sidebar: #e6e9ef;
+    
+    /* Semantic */
+    --status-success: #3fb950;  
+    --status-warning: #d29922;  
+    --status-danger: #ff4b4b;   
+    --status-info: #58a6ff;     
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Source Sans Pro", sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background-color: var(--bg-sidebar);
+    color: var(--text-sidebar);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-sidebar);
+    overflow-y: auto;
+}
+
+.trigger-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-sidebar);
+}
+
+.test-triggers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.trigger-btn {
+    background: #ffffff;
+    border: 1px solid rgba(49, 51, 63, 0.2);
+    color: var(--text-sidebar);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.trigger-btn:hover {
+    border-color: var(--status-danger);
+    color: var(--status-danger);
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    display: flex;
+    padding: 3rem;
+    gap: 2rem;
+    overflow-y: auto;
+}
+
+/* Left Column */
+.left-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-col h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* Chat Input styling exactly like Streamlit */
+.chat-input-wrapper {
+    display: flex;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+#query-input {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid transparent;
+    color: #31333F;
+    padding: 0.75rem 3rem 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#query-input:focus {
+    border-color: var(--status-danger);
+}
+
+#submit-btn {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #f0f2f6;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #31333F;
+}
+
+#submit-btn:hover {
+    background: #e6e9ef;
+    color: var(--status-danger);
+}
+
+/* Error/Output Areas */
+.output-area {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.metrics-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-right: 0.25rem;
+}
+
+.badge-success { background: rgba(63, 185, 80, 0.1) !important; color: var(--status-success) !important; border-color: rgba(63, 185, 80, 0.4) !important; }
+.badge-warning { background: rgba(210, 153, 34, 0.1) !important; color: var(--status-warning) !important; border-color: rgba(210, 153, 34, 0.4) !important; }
+.badge-error { background: rgba(248, 81, 73, 0.1) !important; color: var(--status-danger) !important; border-color: rgba(248, 81, 73, 0.4) !important; }
+.badge-neutral { background: rgba(139, 148, 158, 0.1) !important; color: var(--text-muted) !important; border-color: rgba(139, 148, 158, 0.4) !important; }
+
+.final-answer {
+    font-size: 1.05em;
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+.error-view {
+    background: rgba(255, 75, 75, 0.1);
+    border-radius: 4px;
+    padding: 1rem;
+    color: var(--status-danger);
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+/* Right Column */
+.right-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-col h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.trace-container {
+    flex: 1;
+    background: transparent;
+}
+
+.trace-panel {
+    display: flex;
+    flex-direction: column;
+    background: rgba(38, 39, 48, 0.4);
+    border: 1px solid rgba(250, 250, 250, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    gap: 1.5rem;
+}
+
+.trace-item {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.trace-header {
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
+}
+
+.trace-code {
+    font-family: "Source Code Pro", monospace;
+    font-size: 0.85em;
+    background: #262730;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    border: 1px solid rgba(250, 250, 250, 0.1);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

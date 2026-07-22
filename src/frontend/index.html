@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veritas RAG Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Sidebar (Light Theme) -->
+        <aside class="sidebar">
+            <div class="trigger-label">Execution Triggers</div>
+            <div class="test-triggers">
+                <button class="trigger-btn" data-query="What is OneInbox?">
+                    1. Factual Query
+                </button>
+                <button class="trigger-btn" data-query="How many tool types does OneInbox support?">
+                    2. Contradiction Trigger
+                </button>
+                <button class="trigger-btn" data-query="How do I do it?">
+                    3. Ambiguity Trigger
+                </button>
+                <button class="trigger-btn" data-query="Who is the CEO of Google?">
+                    4. Out of Bounds Trigger
+                </button>
+            </div>
+            
+            <div style="border-top: 1px solid #e6e9ef; margin: 2rem 0 1rem 0;"></div>
+            
+            <button class="trigger-btn" id="clear-btn">
+                Clear Dashboard
+            </button>
+        </aside>
+
+        <!-- Main Area (Dark Theme) -->
+        <main class="main-content">
+            
+            <!-- Left Column: Input and Output -->
+            <div class="left-col">
+                <h2>Veritas RAG Interface</h2>
+                
+                <form id="chat-form" class="chat-input-wrapper">
+                    <input type="text" id="query-input" placeholder="Enter query for pipeline execution..." required>
+                    <button type="submit" id="submit-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="19" x2="12" y2="5"></line>
+                            <polyline points="5 12 12 5 19 12"></polyline>
+                        </svg>
+                    </button>
+                </form>
+
+                <div id="output-area" class="output-area">
+                    <div id="metrics-bar" class="metrics-row" style="display: none;"></div>
+                    <div id="final-answer" class="final-answer"></div>
+                </div>
+            </div>
+
+            <!-- Right Column: Trace -->
+            <div class="right-col">
+                <h2>Pipeline Trace</h2>
+                
+                <div class="trace-container" id="trace-container">
+                    <!-- Trace renders here -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+    
+    <script>
+        window.BACKEND_URL = "http://localhost:8000"; 
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>

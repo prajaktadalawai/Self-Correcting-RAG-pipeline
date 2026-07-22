@@ -1,4 +1,5 @@
 import structlog
+import json
 from typing import Literal
 from langgraph.graph import StateGraph, END
 from src.agent.state import AgentState
@@ -98,19 +99,21 @@ def rewrite_query_node(state: AgentState) -> AgentState:
     system_prompt = (
         "You are an expert search-query optimization agent.\n"
         "Rewrite the user's original query into a better, more detailed search query for a vector database.\n"
-        "Expand abbreviations and add necessary domain context."
+        "Expand abbreviations and add necessary domain context.\n"
+        "You MUST output valid JSON in exactly this format: {\"query\": \"the rewritten query\"}"
     )
     try:
-        response = client.beta.chat.completions.parse(
+        response = client.chat.completions.create(
             model=LLM_MODEL,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"Original query: {state['original_query']}"}
             ],
             temperature=0.2,
-            response_format=RewriteOutput,
+            response_format={"type": "json_object"},
         )
-        state["query"] = response.choices[0].message.parsed.query
+        parsed = json.loads(response.choices[0].message.content)
+        state["query"] = parsed.get("query", f"Rewritten: {state['original_query']}")
     except Exception as e:
         logger.error("rewrite_error", error=str(e))
         state["query"] = f"Rewritten: {state['original_query']}"
