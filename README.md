@@ -13,7 +13,7 @@
 *The live demo features a real-time Streamlit dashboard that visualizes the internal thought process of the Orchestrator, Critic, and Verifier agents as they stream responses via FastAPI.*
 
 
-- **Live URL (Hugging Face / Render):** [Insert Live Link Here]
+- **Live URL : ** [https://lightweight-self-correcting-rag-pip.vercel.app/] 
 
 ---
 
